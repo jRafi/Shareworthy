@@ -1,21 +1,21 @@
 
 library(lubridate)
 
+
 # Personal Identity Number = Personnummer
 # Swedish PIN structure: https://en.wikipedia.org/wiki/Personal_identity_number_(Sweden)
 
 
-# 1. Extract date-of-birth
-# 2. Extract gender
-# 3. Calculate age (current or at specific time)
-# 4. Create age-categorizations
+# 1. Convert PIN to date-of-birth and gender
+# 2. Calculate age (current or at specific time)
+# 3. Create age-categorizations
 
 
-### 1. Extract date-of-birth and gender from Swedish social security numbers
+### 1. Convert Swedish Personal Identity Numbers to date-of-birth ang gender
 
 # Note: Century is coerced to 1900
 # pnummer <- Vector with swedish "personnummer"
- pnummer<-c("111111-1234", "19111111-1234",
+pnummer<-c("111111-1234", "19111111-1234",
            "1111111234", "191111111234",
            "111111", "19111111",
            "11-11-11", "1911-11-11",
@@ -42,8 +42,7 @@ for (i in 1:nrow(pn)) {
 }
 
 
-
-### 2. Extract gender information
+# Gender information
 
 pn$gender<-as.numeric(pn$gender)
 
@@ -58,7 +57,6 @@ for (i in seq_along(pn$gender)) {
                 pn$gender[i]<-"male"
         }
 }
-
 
 
 ### 2. Calculate age (current or at specific time-point)
