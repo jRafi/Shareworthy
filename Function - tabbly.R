@@ -1,6 +1,7 @@
 
 
-# Sapply table on factor-columns in a dataframe
+# Sapply table on all the factor-columns in a dataframe
+# Equivalent to mapply table only on factor-columns
 
 tabbly<-function(x) {
         v<-vector()
