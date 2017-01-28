@@ -36,8 +36,8 @@ summary(m2boot)
 ### Extract bootstrap parameters
 
 # Extract CI:s
-boot.ci(m5, index = 1,type=c("norm", "basic", "perc"))
+boot.ci(m2boot, index = 1,type=c("norm", "basic", "perc"))
 
 # Plot a specific statistic
-plot(m5, index = 1)
+plot(m2boot, index = 1)
 
