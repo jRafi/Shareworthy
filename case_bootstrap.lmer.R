@@ -11,9 +11,6 @@ x<-data.frame("id"=rep(1:100, each=5),
               "y"=rpois(500,1)
 )
 
-hist(x$y) # Display the distribution
-
-
 
 # Using nlme::lme
 library(nlme)
@@ -23,34 +20,33 @@ myModel<-lme(y ~ time*f1*f2, data=x, random= ~ time|id, na.action = na.omit)
 library(lme4)
 myModel<-lmer(y ~ time*f1*f2+(time|id), x, na.action=na.omit)
 
-# Create function that extracts fixed effects
-myfn<-function(x=myModel){fixef(x)}
 
+#====================
+### Run the bootstrap
+#====================
 
-#========================
-### Using case_bootstrap()
-#========================
-
-# Bootstrap and store results in myBootstrapData
+#Using  lmeresampler::case_bootstrap
 # Error: this only seem to work with lmer, not lme.
-myBootstrapData<-case_bootstrap(model=myModel, B=100, fn=myfn, resample = c(TRUE,FALSE))
-summary(myBootstrapData)
+myBootstrapData<-case_bootstrap(model=myModel,
+                                fn=function(x=myModel){fixef(x)},
+                                B=100,
+                                resample = c(TRUE,FALSE)
+)
 
+# Using lmeresampler::bootstrap
+myBootstrapData<-bootstrap(model=myModel,
+                           fn=function(x=myModel){fixef(x)},
+                           type="case",
+                           B=100,
+                           resample=c(TRUE, FALSE)
+)
 
-#====================
-### Using bootstrap()
-#====================
-
-myBootstrapData<-bootstrap(model=myModel, fn=myfn, type="case", B=100, resample=c(TRUE, FALSE))
-summary(myBootstrapData)
-
-
-
-
-### Extract bootstrap parameters
+#============================================
+### Extract statistics from bootstrapped data
+#============================================
 
 # Extract CI:s
-boot.ci(m2boot, index = 1,type=c("norm", "basic", "perc"))
+boot.ci(myBootstrapData, index = 1,type=c("norm", "basic", "perc"))
 
 # Plot a specific statistic
-plot(m2boot, index = 1)
+plot(myBootstrapData, index = 1)
