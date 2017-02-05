@@ -25,8 +25,8 @@ myModel<-lmer(y ~ time*f1*f2+(time|id), x, na.action=na.omit)
 ### Run the bootstrap
 #====================
 
-#Using  lmeresampler::case_bootstrap
-# Error: this only seem to work with lmer, not lme.
+# Using  lmeresampler::case_bootstrap
+# (Needs version 0.1.1 to work with lme)
 myBootstrapData<-case_bootstrap(model=myModel,
                                 fn=function(x=myModel){fixef(x)},
                                 B=100,
