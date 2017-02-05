@@ -1,2 +1,2 @@
 # Shareworthy
-Content that should be original enough to be of use for someone else
+Content that might be original enough to be useful for someone else
